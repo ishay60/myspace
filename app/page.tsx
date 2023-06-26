@@ -12,7 +12,7 @@ export default function Blog() {
   return (
     <div>
       <h1>About us</h1>
-      <NavMenu />
+      {/* <NavMenu /> */}
       <p>This is our Blog</p>
     </div>
   );
