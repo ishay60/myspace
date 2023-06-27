@@ -1,17 +1,9 @@
-import { getServerSession } from "next-auth";
+import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
-// Dummy data
-const posts = [
-  {
-    title: "Lorem Ipsum",
-    slug: "lorem-ipsum",
-    content:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero.",
-  },
-];
+export async function GET(request: Request) {
+  const users = await prisma.user.findMany();
+  console.log(users);
 
-export async function GET() {
-  const session = await getServerSession;
-  return NextResponse.json(posts);
+  return NextResponse.json(users);
 }
