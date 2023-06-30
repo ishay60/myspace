@@ -51,6 +51,8 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+   followedBy  Follows[] @relation("FollowerRelation")
+  following   Follows[] @relation("FollowingRelation")
 }
 
 model VerificationToken {
@@ -60,3 +62,17 @@ model VerificationToken {
 
   @@unique([identifier, token])
 }
+model Follows {
+  id          Int    @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  followerId  String
+  followingId String
+  follower    User   @relation("FollowerRelation", fields: [followerId], references: [id])
+  following   User   @relation("FollowingRelation", fields: [followingId], references: [id])
+
+  @@index([followerId], name: "followerId")
+  @@index([followingId], name: "followingId")
+  @@unique([followerId, followingId], name: "follower_following_unique")
+}
+
